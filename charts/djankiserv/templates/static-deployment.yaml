@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "djankiserv.fullname" . }}-static
+  labels:
+    {{- include "djankiserv.static.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "djankiserv.static.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "djankiserv.static.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}-static
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.static.image.repository }}:{{ .Values.static.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.static.image.pullPolicy }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.static.listenPort }}
+              protocol: TCP

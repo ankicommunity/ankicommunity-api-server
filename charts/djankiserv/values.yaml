@@ -1,0 +1,220 @@
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "djankisa"
+
+# You must replace these email addresses with your own.
+# Let's Encrypt will use this to contact you about expiring
+# certificates, and issues related to your account.
+clusterissuer:
+  prod:
+    name: letsencrypt-prod
+    enabled: false
+    privateKeySecretRef: djankiserv-le-key-prod
+  #   email: user@example.com  # You MUST declare a valid email here, even for staging!
+  staging:
+    name: letsencrypt-staging
+    enabled: false
+    privateKeySecretRef: djankiserv-le-key-staging
+  #   email: user@example.com  # You MUST declare a valid email here, even for staging!
+
+djankiserv:
+  image:
+    repository: antonmelser/djankiserv
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  enabled: true
+  debug: false
+  ## app config passed as env vars
+
+  # FIXME: currently only supports a single host
+  host: mydjanki.local
+
+  # django secret key FIXME: secret
+  ##
+  secretKey: a_relly_secret_key
+  ## Internal IP for transcrobes to listen on
+  ##
+  listenAddress: 0.0.0.0
+  ## Internal port for transcrobes to listen on
+  ##
+  listenPort: 8000
+  ## Number of gunicorn workers
+  ##
+  gunicornWorkers: 1
+  ## gunicorn process timeout, see http://docs.gunicorn.org/en/latest/settings.html#timeout
+  ##
+  gunicornTimeout: 120
+  db:
+    # only define if not using the provided postgres instance
+    main: {}  #
+    #   engine: django.db.backends.postgresql  # should support others, though only postgresql currently supported
+    #   name: djankiserv
+    #   user: djankiserv
+    #   password: djankiserv
+    #   host: djankiserv
+    #   port: 5432
+    # only define if not using the provided postgres instance
+    user: {}  # only a postgresql engine is currently supported
+    #   name: djankiserv
+    #   user: djankiserv
+    #   password: djankiserv
+    #   host: djankiserv
+    #   port: 5432
+
+  extraEnv:
+    PYTHONDONTWRITEBYTECODE: "1"
+
+  persistence:  # FIXME: this is only appropriate for a single-node microk8s deployment
+    enabled: true  # currently must be enabled
+    accessMode: ReadWriteOnce  # TODO: should be ReadOnlyMany to have multiple pods but how do we provision the files?
+    size: 1Gi
+
+    ## App config passed as env var and used for volume mount
+    ##
+    dataRoot: '/opt/djankiserv/'
+
+## Config related to the static files, currently only for the admin
+#
+static:
+  enabled: true
+  image:
+    repository: antonmelser/djankiserv-static
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  listenPort: 80
+  service:
+    type: ClusterIP
+    port: 80
+
+## Config related to the kubernetes ingress resource, this is for managing transfer chunking and routing to the
+## static and djankiserv pods, and managing the SSL certificates. This is also where you should configure the
+## network if you have any other setup other than a `microk8s`-based setup in a dedicated VM with a dedicated IP
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+  tls:
+    secretName: letsencrypt-cert-staging
+
+  controller:
+    ## direct access to the hosts ports 80 and 443
+    ## This is only really appropriate/useful for machines (VMs) that have a public IP (or public IP NAT)
+    ## and you are only hosting serving djankiserv on this kubernetes instance
+    #
+    service:
+      type: ""
+
+    hostNetwork: true
+    kind: DaemonSet
+    dnsPolicy: ClusterFirstWithHostNet
+
+    ## Using some other form of proxy to the machine's (VM's) public IP
+    ## Currently only NodePort is supported, cloud provider LB support to come
+    ##
+    #
+    # service:
+    #   type: NodePort
+    #   nodePorts:
+    #   ## Define a static NodePort so the cloud provider router can point to a known value
+    #   ##
+    #     https: 32443
+    #   ## Enable plain http. This won't work on most browsers, who won't get from an http api when the page is https
+    #   ##
+    #   enableHttp: true
+    #   ## Enable https.
+    #   ##
+    #   enableHttps: true  # TODO: this should be linked to the tls configs somehow
+
+## This section inspired by
+## https://github.com/helm/charts/blob/cbd5e811a44c7bac6226b019f1d1810ef5ee45fa/stable/quassel/values.yaml
+## Configuration values for the postgresql dependency.
+## ref: https://github.com/kubernetes/charts/blob/master/stable/postgresql/README.md
+##
+postgresql:
+
+  ## Use the PostgreSQL chart dependency.
+  ##
+  enabled: true
+
+  ## Must override due to the postgresql.fullname and postgresql.master.fullname templates not working in our templates
+  ## TODO: it is probably possible to do this properly with imports
+  ##
+  fullnameOverride: djankiserv-postgres
+
+  ## Override of upstream pullPolicy
+  ##
+  image:
+    tag: 12
+    pullPolicy: IfNotPresent
+
+  ## Annotations to be added to ankrobes pods
+  ##
+  podAnnotations: {}
+
+  ### PostgreSQL User to create.
+  ##
+  postgresqlUsername: postgres
+
+  ## PostgreSQL Password for the new user.
+  ## If not set, a random 10 characters password will be used.
+  ##
+  postgresqlPassword: djankiserv
+
+  ## PostgreSQL Database to create.
+  ##
+  postgresqlDatabase: djankiserv
+
+  ## PostgreSQL override parameters
+  ##
+  postgresqlExtendedConf: { "sharedBuffers": "128MB", "maxConnections": 300 }
+
+  ## Persistent Volume Storage configuration.
+  ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes
+  ##
+  persistence:
+    ## Enable PostgreSQL persistence using Persistent Volume Claims.
+    ##
+    enabled: true
+    ## A manually managed Persistent Volume and Claim
+    ## Requires persistence.enabled: true
+    ## If defined, PVC must be created manually before volume will be bound
+    # existingClaim:
+
+    accessMode: ReadWriteOnce
+    size: 1Gi
+
+  ## Don't always pull image
+  volumePermissions:
+    image:
+      pullPolicy: IfNotPresent
+
+## Values included in the default `helm create` templates that we aren't using yet but didn't remove
+autoscaling:
+  enabled: false
+replicaCount: 1
+podAnnotations: {}
+podSecurityContext: {}
+securityContext: {}
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+## end Values included

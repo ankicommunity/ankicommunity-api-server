@@ -1,0 +1,32 @@
+{
+    "decks": {
+        "1": {
+            "collapsed": false,
+            "conf": 1,
+            "desc": "",
+            "dyn": 0,
+            "extendNew": 10,
+            "extendRev": 50,
+            "id": 1,
+            "lrnToday": [
+                26,
+                0
+            ],
+            "mod": 1597199283,
+            "name": "Default",
+            "newToday": [
+                26,
+                0
+            ],
+            "revToday": [
+                26,
+                0
+            ],
+            "timeToday": [
+                26,
+                0
+            ],
+            "usn": 0
+        }
+    }
+}

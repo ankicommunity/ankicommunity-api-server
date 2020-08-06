@@ -1,0 +1,25 @@
+{
+	"deck": "Default",
+    "notes": [
+        {
+            "fields": [
+                "front value",
+                "back value"
+            ],
+            "model": "Basic",
+            "tags": [
+                "a_tag"
+            ]
+        },
+        {
+            "fields": [
+                "a deleted front",
+                "a deleted back"
+            ],
+            "model": "Basic",
+            "tags": [
+                "another_tag"
+            ]
+        }
+    ]
+}

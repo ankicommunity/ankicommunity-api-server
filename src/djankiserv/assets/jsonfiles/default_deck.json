@@ -1,0 +1,15 @@
+{
+    "id": 1,
+    "name": "Default",
+    "newToday": [0, 0],
+    "revToday": [0, 0],
+    "lrnToday": [0, 0],
+    "timeToday": [0, 0],
+    "conf": 1,
+    "usn": 0,
+    "desc": "",
+    "dyn": 0,
+    "collapsed": false,
+    "extendNew": 10,
+    "extendRev": 50
+}

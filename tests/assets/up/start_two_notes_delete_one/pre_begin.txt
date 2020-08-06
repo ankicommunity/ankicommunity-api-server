@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'k': ['b9788545b72b5fd44e09177a33fdef5b'], 'v': ['ankidesktop,2.1.21,lin:ubuntu:20.04'], 'c': ['1']}>
+
+DATA:
+{}

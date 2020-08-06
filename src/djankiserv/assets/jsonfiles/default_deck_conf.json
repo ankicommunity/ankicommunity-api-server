@@ -1,0 +1,36 @@
+{
+    "id": 1,
+    "name": "Default",
+    "new": {
+        "delays": [1, 10],
+        "ints": [1, 4, 7],
+        "initialFactor": 2500,
+        "separate": true,
+        "order": 1,
+        "perDay": 20,
+        "bury": false
+    },
+    "lapse": {
+        "delays": [10],
+        "mult": 0,
+        "minInt": 1,
+        "leechFails": 8,
+        "leechAction": 0
+    },
+    "rev": {
+        "perDay": 200,
+        "ease4": 1.3,
+        "fuzz": 0.05,
+        "minSpace": 1,
+        "ivlFct": 1,
+        "maxIvl": 36500,
+        "bury": false,
+        "hardFactor": 1.2
+    },
+    "maxTaken": 60,
+    "timer": 0,
+    "autoplay": true,
+    "replayq": true,
+    "mod": 0,
+    "usn": 0
+}

@@ -1,0 +1,30 @@
+apiVersion: v2
+name: djankiserv
+description: A Helm chart for installing Djankiserv
+
+type: application
+version: 0.0.1
+appVersion: 0.0.1
+
+keywords:
+  - Django
+  - Anki
+  - sync
+sources:
+  - https://github.com/ankicommunity/djankiserv
+home: https://github.com/ankicommunity/djankiserv
+dependencies:
+  - name: postgresql
+    version: 9.3.3
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
+    tags:
+      - djankiserv-database
+
+  - name: ingress-nginx
+    version: 2.13.x
+    alias: ingress  # because https://github.com/helm/helm/issues/2192
+    repository: https://kubernetes.github.io/ingress-nginx
+    condition: ingress-nginx.enabled  # FIXME: this doesn't appear to work
+    tags:
+      - djankiserv-nginx

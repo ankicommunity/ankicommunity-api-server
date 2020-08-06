@@ -1,0 +1,6 @@
+djankiserv:
+  host: a.fqdn.org
+clusterissuer:
+  staging:
+    enabled: true
+    email: an@email.com

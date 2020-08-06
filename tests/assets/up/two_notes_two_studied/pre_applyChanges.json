@@ -1,0 +1,59 @@
+{
+    "changes": {
+        "conf": {
+            "activeDecks": [
+                1
+            ],
+            "addToCur": true,
+            "collapseTime": 1200,
+            "curDeck": 1,
+            "curModel": "1597885581299",
+            "dayLearnFirst": false,
+            "dueCounts": true,
+            "estTimes": true,
+            "newBury": true,
+            "newSpread": 0,
+            "nextPos": 3,
+            "schedVer": 1,
+            "sortBackwards": false,
+            "sortType": "noteFld",
+            "timeLim": 0
+        },
+        "crt": 1597867200,
+        "decks": [
+            [
+                {
+                    "collapsed": false,
+                    "conf": 1,
+                    "desc": "",
+                    "dyn": 0,
+                    "extendNew": 10,
+                    "extendRev": 50,
+                    "id": 1,
+                    "lrnToday": [
+                        0,
+                        2
+                    ],
+                    "mod": 1597886093,
+                    "name": "Default",
+                    "newToday": [
+                        0,
+                        2
+                    ],
+                    "revToday": [
+                        0,
+                        0
+                    ],
+                    "timeToday": [
+                        0,
+                        7765
+                    ],
+                    "usn": 3
+                }
+            ],
+            []
+        ],
+        "models": [],
+        "tags": []
+    }
+}

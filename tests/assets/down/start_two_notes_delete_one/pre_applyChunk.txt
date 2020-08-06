@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'k': ['84674cfad4f0c36c06a1864279a03855'], 's': ['7ae7caed'], 'c': ['1']}>
+
+DATA:
+{'chunk': {'done': True, 'revlog': [], 'cards': [], 'notes': []}}

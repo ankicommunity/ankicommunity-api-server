@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "djankiserv.fullname" . }}
+  labels:
+    {{- include "djankiserv.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "djankiserv.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "djankiserv.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "djankiserv.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      initContainers:
+        - name: check-db-ready
+          image: postgres:12
+          command: ['sh', '-c',
+            'until psql -c "select 1;";
+            do echo waiting for database; sleep 2; done;']
+          env:
+            - name: PGUSER
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: PGDATABASE
+              value: "{{ .Values.postgresql.postgresqlDatabase }}"
+            - name: PGPASSWORD
+              value: "{{ .Values.postgresql.postgresqlPassword }}"
+            - name: PGHOST
+              value: "{{ .Values.postgresql.fullnameOverride }}"
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.djankiserv.image.repository }}:{{ .Values.djankiserv.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.djankiserv.image.pullPolicy }}
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          ports:
+            - name: http
+              containerPort: {{ .Values.djankiserv.listenPort }}
+              protocol: TCP
+          env:
+            {{- range $key, $value := .Values.djankiserv.extraEnv }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+            - name: PYTHONUNBUFFERED  # MUST put or no logs printed to kube, but probably should be in values
+              value: "0"
+            - name: POSTGRES_USER  # FIXME: these should be removed
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: POSTGRES_DATABASE
+              value: "{{ .Values.postgresql.postgresqlDatabase }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgresql.postgresqlPassword }}"
+            - name: POSTGRES_HOST
+              value: "{{ .Values.postgresql.fullnameOverride }}"
+
+            - name: DJANKISERV_MAINDB_ENGINE
+              value: {{ default "django.db.backends.postgresql" .Values.djankiserv.db.main.engine | quote }}
+            - name: DJANKISERV_MAINDB_NAME
+              value: "{{ .Values.djankiserv.db.main.name | default .Values.postgresql.postgresqlDatabase }}"
+            - name: DJANKISERV_MAINDB_USER
+              value: "{{ .Values.djankiserv.db.main.user | default .Values.postgresql.postgresqlUsername }}"
+            - name: DJANKISERV_MAINDB_PASSWORD
+              value: "{{ .Values.djankiserv.db.main.password | default .Values.postgresql.postgresqlPassword }}"
+            - name: DJANKISERV_MAINDB_HOST
+              value: "{{ .Values.djankiserv.db.main.host | default .Values.postgresql.fullnameOverride }}"
+            - name: DJANKISERV_MAINDB_PORT
+              value: "{{ default 5432 .Values.djankiserv.db.main.port }}"
+
+            - name: DJANKISERV_USERDB_NAME
+              value: "{{ .Values.djankiserv.db.user.name | default .Values.postgresql.postgresqlDatabase }}"
+            - name: DJANKISERV_USERDB_USER
+              value: "{{ .Values.djankiserv.db.user.user | default .Values.postgresql.postgresqlUsername }}"
+            - name: DJANKISERV_USERDB_PASSWORD
+              value: "{{ .Values.djankiserv.db.user.password | default .Values.postgresql.postgresqlPassword  }}"
+            - name: DJANKISERV_USERDB_HOST
+              value: "{{ .Values.djankiserv.db.user.host | default .Values.postgresql.fullnameOverride }}"
+            - name: DJANKISERV_USERDB_PORT
+              value: "{{ default 5432 .Values.djankiserv.db.user.port }}"
+
+            - name: DJANKISERV_DATA_ROOT
+              value: {{ default "/opt/djankiserv" .Values.djankiserv.persistence.dataRoot | quote }}
+            - name: DJANKISERV_DEBUG
+              value: {{ default "false" .Values.djankiserv.debug | quote }}
+
+            - name: DJANKISERV_ALLOWED_HOSTS
+              value: {{ include "djankiserv.fullname" . }},{{ required "A valid .Values.djankiserv.host entry required!" .Values.djankiserv.host  }}
+
+            - name: DJANKISERV_SECRET_KEY  # FIXME: this MUST be a secret eventually
+              value: "{{ .Values.djankiserv.secretKey }}"
+            - name: DJANKISERV_GUNICORN_WORKERS
+              value: "{{ .Values.djankiserv.gunicornWorkers }}"
+            - name: DJANKISERV_GUNICORN_TIMEOUT
+              value: "{{ .Values.djankiserv.gunicornTimeout }}"
+            - name: DJANKISERV_LISTEN_ADDRESS
+              value: "{{ .Values.djankiserv.listenAddress }}"
+            - name: DJANKISERV_LISTEN_PORT
+              value: "{{ .Values.djankiserv.listenPort }}"
+
+          volumeMounts:
+          - mountPath: "{{ .Values.djankiserv.persistence.dataRoot }}"
+            name: {{ include "djankiserv.fullname" . }}
+      volumes:
+        - name: {{ include "djankiserv.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ include "djankiserv.fullname" . }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,26 @@
+{
+    "notes": [
+        {
+            "fields": [
+                "front value",
+                "back value"
+            ],
+            "id": 1597199240668,
+            "model": "Basic",
+            "tags": [
+                "a_tag"
+            ]
+        },
+        {
+            "fields": [
+                "a deleted front",
+                "a deleted back"
+            ],
+            "id": 1597199560880,
+            "model": "Basic",
+            "tags": [
+                "another_tag"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,56 @@
+{
+  "1599180874580": {
+    "sortf": 0,
+    "did": 1,
+    "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
+    "latexPost": "\\end{document}",
+    "mod": 1599180906,
+    "usn": -1,
+    "vers": [],
+    "type": 0,
+    "css": ".card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\n background-color: white;\n}\n",
+    "name": "Basic",
+    "flds": [
+      {
+        "name": "Front",
+        "ord": 0,
+        "sticky": false,
+        "rtl": false,
+        "font": "Arial",
+        "size": 20,
+        "media": []
+      },
+      {
+        "name": "Back",
+        "ord": 1,
+        "sticky": false,
+        "rtl": false,
+        "font": "Arial",
+        "size": 20,
+        "media": []
+      }
+    ],
+    "tmpls": [
+      {
+        "name": "Card 1",
+        "ord": 0,
+        "qfmt": "{{Front}}",
+        "afmt": "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}",
+        "did": null,
+        "bqfmt": "",
+        "bafmt": ""
+      }
+    ],
+    "tags": [],
+    "id": "1599180874580",
+    "req": [
+      [
+        0,
+        "all",
+        [
+          0
+        ]
+      ]
+    ]
+  }
+}

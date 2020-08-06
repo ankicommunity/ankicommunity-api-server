@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "djankiserv.fullname" . }}
+  labels:
+    {{- include "djankiserv.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.djankiserv.service.type }}
+  ports:
+    - port: {{ .Values.djankiserv.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "djankiserv.selectorLabels" . | nindent 4 }}

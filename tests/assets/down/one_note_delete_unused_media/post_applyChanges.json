@@ -1,0 +1,34 @@
+{
+    "conf": {
+        "activeCols": [
+            "noteFld",
+            "template",
+            "cardDue",
+            "deck"
+        ],
+        "activeDecks": [
+            1
+        ],
+        "addToCur": true,
+        "collapseTime": 1200,
+        "curDeck": 1,
+        "curModel": "1597885581299",
+        "dayLearnFirst": false,
+        "dueCounts": true,
+        "estTimes": true,
+        "newBury": true,
+        "newSpread": 0,
+        "nextPos": 3,
+        "schedVer": 1,
+        "sortBackwards": false,
+        "sortType": "noteFld",
+        "timeLim": 0
+    },
+    "crt": 1597867200,
+    "decks": [
+        [],
+        []
+    ],
+    "models": [],
+    "tags": []
+}

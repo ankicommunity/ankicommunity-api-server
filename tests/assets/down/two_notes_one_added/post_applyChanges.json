@@ -1,0 +1,96 @@
+{
+    "conf": {
+        "activeDecks": [
+            1
+        ],
+        "addToCur": true,
+        "collapseTime": 1200,
+        "curDeck": 1,
+        "curModel": "1597885581299",
+        "dayLearnFirst": false,
+        "dueCounts": true,
+        "estTimes": true,
+        "newBury": true,
+        "newSpread": 0,
+        "nextPos": 3,
+        "schedVer": 1,
+        "sortBackwards": false,
+        "sortType": "noteFld",
+        "timeLim": 0
+    },
+    "crt": 1597867200,
+    "decks": [
+        [],
+        []
+    ],
+    "models": [
+        {
+            "css": ".card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\n background-color: white;\n}\n",
+            "did": 1,
+            "flds": [
+                {
+                    "font": "Liberation Sans",
+                    "media": [],
+                    "name": "Front",
+                    "ord": 0,
+                    "rtl": false,
+                    "size": 20,
+                    "sticky": false
+                },
+                {
+                    "font": "Arial",
+                    "media": [],
+                    "name": "Back",
+                    "ord": 1,
+                    "rtl": false,
+                    "size": 20,
+                    "sticky": false
+                },
+                {
+                    "font": "Liberation Sans",
+                    "media": [],
+                    "name": "myimg",
+                    "ord": 2,
+                    "rtl": false,
+                    "size": 20,
+                    "sticky": false
+                }
+            ],
+            "id": "1597885581299",
+            "latexPost": "\\end{document}",
+            "latexPre": "\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n",
+            "mod": 1597886003,
+            "name": "Basic",
+            "req": [
+                [
+                    0,
+                    "any",
+                    [
+                        0
+                    ]
+                ]
+            ],
+            "sortf": 0,
+            "tags": [
+                "second_tag"
+            ],
+            "tmpls": [
+                {
+                    "afmt": "{{FrontSide}}\n\n<hr id=answer>\n\n{{Back}}",
+                    "bafmt": "",
+                    "bqfmt": "",
+                    "did": null,
+                    "name": "Card 1",
+                    "ord": 0,
+                    "qfmt": "{{Front}}"
+                }
+            ],
+            "type": 0,
+            "usn": 1,
+            "vers": []
+        }
+    ],
+    "tags": [
+        "second_tag"
+    ]
+}

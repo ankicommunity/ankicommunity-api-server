@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'c': ['1'], 'k': ['jiocmramj207v1hcqav21utzscugpdql'], 's': ['lwJPk<w6G@']}>
+
+DATA:
+{'chunk': {'done': True}}

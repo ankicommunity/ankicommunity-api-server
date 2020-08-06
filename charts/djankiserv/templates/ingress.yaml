@@ -1,0 +1,41 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "djankiserv.fullname" . -}}
+{{- $staticSvcPort := .Values.static.service.port -}}
+{{- $djankiservSvcPort := .Values.djankiserv.service.port -}}
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "djankiserv.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ required "A valid .Values.djankiserv.host entry required!" .Values.djankiserv.host | quote }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+  {{- end }}
+  rules:
+    - host: {{ required "A valid .Values.djankiserv.host entry required!" .Values.djankiserv.host | quote }}
+      http:
+        paths:
+          - path: /static/
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}-static
+                port:
+                  number: {{ $staticSvcPort }}
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: {{ $djankiservSvcPort }}
+  {{- end }}

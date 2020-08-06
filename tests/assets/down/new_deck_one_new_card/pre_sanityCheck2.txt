@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'k': ['9ocu274z31wmfi63pe32m6m588xjwlnz'], 's': ['e06bbd7c'], 'c': ['1']}>
+
+DATA:
+{'client': [[1, 0, 0], 2, 2, 0, 1, 5, 2, 1]}

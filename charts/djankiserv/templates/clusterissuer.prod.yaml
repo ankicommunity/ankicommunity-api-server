@@ -1,0 +1,18 @@
+{{- if .Values.clusterissuer.prod.enabled -}}
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: {{ .Values.clusterissuer.prod.name }}
+spec:
+  acme:
+    email: {{ required "A valid .Values.clusterissuer.prod.email entry required!" .Values.clusterissuer.prod.email }}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      # Secret resource that will be used to store the account's private key.
+      name: {{ .Values.clusterissuer.prod.privateKeySecretRef }}
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+{{- end }}

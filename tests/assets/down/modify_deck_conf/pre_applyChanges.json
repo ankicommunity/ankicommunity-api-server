@@ -1,0 +1,30 @@
+{
+    "changes": {
+        "conf": {
+            "activeDecks": [
+                1
+            ],
+            "addToCur": true,
+            "collapseTime": 1200,
+            "curDeck": 1,
+            "curModel": 1599273529538,
+            "dayLearnFirst": false,
+            "dueCounts": true,
+            "estTimes": true,
+            "newBury": true,
+            "newSpread": 0,
+            "nextPos": 2,
+            "schedVer": 1,
+            "sortBackwards": false,
+            "sortType": "noteFld",
+            "timeLim": 0
+        },
+        "crt": 1599249600,
+        "decks": [
+            [],
+            []
+        ],
+        "models": [],
+        "tags": []
+    }
+}

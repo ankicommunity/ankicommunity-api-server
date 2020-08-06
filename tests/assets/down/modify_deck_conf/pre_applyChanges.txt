@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'c': ['1'], 'k': ['wf4cc77w2fwqdo4km187ugeoxwkj7zsv'], 's': ['x[g#b)rn>*']}>
+
+DATA:
+{'changes': {'models': [], 'decks': [[], []], 'tags': [], 'conf': {'schedVer': 1, 'addToCur': True, 'estTimes': True, 'curDeck': 1, 'newBury': True, 'timeLim': 0, 'dueCounts': True, 'sortBackwards': False, 'sortType': 'noteFld', 'curModel': 1599273529538, 'nextPos': 2, 'newSpread': 0, 'dayLearnFirst': False, 'activeDecks': [1], 'collapseTime': 1200}, 'crt': 1599249600}}

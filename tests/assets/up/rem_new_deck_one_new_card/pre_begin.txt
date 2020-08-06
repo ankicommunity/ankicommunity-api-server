@@ -1,0 +1,5 @@
+POST:
+<QueryDict: {'k': ['to0929gkkinyuk5916y8as2d4egnp33p'], 'v': ['ankidesktop,2.1.21,win:10'], 'c': ['1']}>
+
+DATA:
+{}

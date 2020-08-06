@@ -1,0 +1,15 @@
+{{- if and .Values.djankiserv.enabled .Values.djankiserv.persistence.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "djankiserv.fullname" . }}
+  labels:
+    {{- include "djankiserv.labels" . | nindent 4 }}
+spec:
+  accessModes:
+  - {{ .Values.djankiserv.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.djankiserv.persistence.size }}
+status: {}
+{{- end }}
