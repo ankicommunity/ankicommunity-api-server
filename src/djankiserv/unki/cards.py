@@ -76,3 +76,27 @@ class Card:  # pylint: disable=R0902
             self.flags,
             self.data,
         )
+
+    def load(self):
+        (
+            self.id,
+            self.nid,
+            self.did,
+            self.ord,
+            self.mod,
+            self.usn,
+            self.type,
+            self.queue,
+            self.due,
+            self.ivl,
+            self.factor,
+            self.reps,
+            self.lapses,
+            self.left,
+            self.odue,
+            self.odid,
+            self.flags,
+            self.data,
+        ) = self.col.db.first(f"select * from {self.col.username}.cards where id = %s", self.id)
+        self._qa = None
+        self._note = None

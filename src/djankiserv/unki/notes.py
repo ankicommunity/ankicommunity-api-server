@@ -116,6 +116,10 @@ class Note:  # pylint: disable=R0902
     def items(self):
         return [(field["name"], self.fields[ordi]) for ordi, field in sorted(self._fmap.values())]
 
+    def cards(self):
+        card_ids = self.col.db.list(f"select id from {self.col.username}.cards where nid = %s order by ord", self.id)
+        return [djankiserv.unki.cards.Card(self.col, card_id) for card_id in card_ids]
+
     def __getitem__(self, key):
         return self.fields[self._fmap[key][0]]
 

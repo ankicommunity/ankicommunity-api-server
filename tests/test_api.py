@@ -2,6 +2,7 @@
 
 import base64
 import json
+import time
 
 from django.urls import reverse
 from rest_framework import status
@@ -116,6 +117,12 @@ class ApiTest(TestRemoteServer):
 
         returned = json.loads(response.content.decode("utf8"))
         reference = self.load_json_asset("decks.json")
+
+        before = self.load_db_to_dict()
+
+        today = int((time.time() - before["col"][0][1]) // 86400)
+        for k in ["lrnToday", "newToday", "revToday", "timeToday"]:
+            reference["decks"]["1"][k] = [today, 0]
 
         self.assertEqual(returned, reference)
 

@@ -12,7 +12,8 @@ pylint tests/*
 pre-commit run --all-files --verbose
 
 # Test with the default db backend, postgresql
-python src/manage.py test --verbosity=1 tests
+coverage run --source='src' src/manage.py test --verbosity=1 tests
+coverage report -m --skip-covered --skip-empty --fail-under 82
 
 # Test with the mariadb/mysql db backend
 DJANKISERV_MAINDB_ENGINE=django.db.backends.mysql DJANKISERV_USERDB_ENGINE=django.db.backends.mysql python src/manage.py test --verbosity=1 tests

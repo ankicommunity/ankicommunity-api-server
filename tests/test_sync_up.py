@@ -769,7 +769,7 @@ class SyncTestRemoteMediaServerUp(SyncTestRemoteServerUp):
         self.assertEqual([media[0][0], ("wo2.png", 3, None)], media[1])
 
         # FIXME: we should probably test that there is a file there that gets deleted by the method
-        # self.assertTrue(pathlib.Path(f'{settings.DJANKISERV_DATA_ROOT}/
+        # self.assertTrue(pathlib.Path(f'{self.settings.DJANKISERV_DATA_ROOT}/
         # {SyncTestRemoteServer.USERNAME}/wo2.png').exists())
 
     def test_uploadChanges_one_note_w_media(self):

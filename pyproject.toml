@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "djankiserv"
-version = "0.0.1"
+version = "0.0.2"
 description = "Django-based synchronisation and API server for Anki"
 authors = ["Anton Melser <anton@melser.org>"]
 license = "AGPL-3.0-or-later"
@@ -28,7 +28,9 @@ mysqlclient = "^2.0.1"
 psycopg2-binary = "^2.8.6"
 
 [tool.coverage.run]
-omit = []
+omit = [
+    "*manage.py",
+]
 
 [tool.pylint.messages_control]
 # I0011 Warning locally suppressed using disable-msg
