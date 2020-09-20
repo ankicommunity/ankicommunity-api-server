@@ -300,3 +300,7 @@ class DeckManager:  # pylint: disable=R0904
         if deck:
             return deck["name"]
         return "[no deck]"
+
+    # FIXME: maybe not called
+    # def is_dyn(self, deck_id):
+    #     return self.get(deck_id)['dyn']

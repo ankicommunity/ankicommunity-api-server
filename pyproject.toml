@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "djankiserv"
-version = "0.0.2"
+version = "0.0.3"
 description = "Django-based synchronisation and API server for Anki"
 authors = ["Anton Melser <anton@melser.org>"]
+maintainers = ["Anton Melser <anton@melser.org>"]
 license = "AGPL-3.0-or-later"
+readme = "README.md"
+homepage = "https://github.com/ankicommunity/djankiserv"
+repository = "https://github.com/ankicommunity/djankiserv"
 
 [tool.poetry.dependencies]
 python = "~3.8"

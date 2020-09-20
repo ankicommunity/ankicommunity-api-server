@@ -105,8 +105,8 @@ class Note:  # pylint: disable=R0902
 
         self.col.register_tags(self.tags)
         if not self.newlyAdded:
-            # FIXME: this is possibly deach code - so far this hasn't been executed so it is unclear how it can work...
-            self.col.genCards([self.id])
+            self.col.gen_cards([self.id])
+
             # FIXME: see orig _postFlush method - should we do this here???
             # self.col.remEmptyCards(ids)
 

@@ -30,6 +30,17 @@ NEW_CARDS_DUE = 1
 logger = logging.getLogger("djankiserv.unki.collection")
 
 
+# from anki.utils
+def maxID(db, username):
+    "Return the first safe ID to use."
+    now = max(
+        intTime(1000),
+        db.scalar(f"select max(id) from {username}.notes") or 0,
+        db.scalar(f"select max(id) from {username}.cards") or 0,
+    )
+    return now + 1
+
+
 class Collection:  # pylint: disable=R0902,R0904
     def __init__(self, username, media_dir_base):
         self.username = username
@@ -586,3 +597,76 @@ class Collection:  # pylint: disable=R0902,R0904
         while self.db.scalar(f"select id from {self.username}.{table_name} where id = %s", ts):
             ts += 1
         return ts
+
+    def gen_cards(self, note_ids):  # noqa: C901  # pylint: disable=R0914,R0912
+        "Generate cards for non-empty templates, return ids to remove."
+        # build map of (nid,ord) so we don't create dupes
+        note_id_strings = ids2str(note_ids)
+        have = {}
+        deck_ids = {}
+        dues = {}
+        for card_id, note_id, ordi, deck_id, due, odue, odid in self.db.execute(
+            f"select id, nid, ord, did, due, odue, odid from {self.username}.cards where nid in " + note_id_strings
+        ):
+            # existing cards
+            if note_id not in have:
+                have[note_id] = {}
+            have[note_id][ordi] = card_id
+            # if in a filtered deck, add new cards to original deck
+            if odid != 0:
+                did = odid
+            # and their dids
+            if note_id in deck_ids:
+                if deck_ids[note_id] and deck_ids[note_id] != deck_id:
+                    # cards are in two or more different decks; revert to
+                    # model default
+                    deck_ids[note_id] = None
+            else:
+                # first card or multiple cards in same deck
+                deck_ids[note_id] = deck_id
+            # save due
+            if odid != 0:
+                due = odue
+            if note_id not in dues:
+                dues[note_id] = due
+        # build cards for each note
+        data = []
+        ts = maxID(self.db, self.username)
+        now = intTime()
+        rem = []
+        usn = self.usn
+        for note_id, model_id, flds in self.db.execute(
+            f"select id, mid, flds from {self.username}.notes where id in " + note_id_strings
+        ):
+            model = self.models.get(model_id)
+            available_ords = self.models.avail_ords(model, flds)
+            deck_id = deck_ids.get(note_id) or model["did"]
+            due = dues.get(note_id)
+            # add any missing cards
+            for t in self._templates_from_ordinals(model, available_ords):
+                doHave = note_id in have and t["ord"] in have[note_id]
+                if not doHave:
+                    # FIXME: this has not been executed yet, maybe dead code to remove!!!
+                    # check deck is not a cram deck
+                    deck_id = t["did"] or deck_id
+                    if self.decks.isDyn(deck_id):
+                        deck_id = 1
+                    # if the deck doesn't exist, use default instead
+                    did = self.decks.get(did)["id"]
+                    # use sibling due# if there is one, else use a new id
+                    if due is None:
+                        due = self.nextID("pos")
+                    data.append((ts, note_id, did, t["ord"], now, usn, due))
+                    ts += 1
+            # note any cards that need removing
+            if note_id in have:
+                for ordi, card_id in list(have[note_id].items()):
+                    if ordi not in available_ords:
+                        rem.append(card_id)
+        # bulk update
+        self.db.executemany(
+            """
+            insert into {self.username}.cards values (%s,%s,%s,%s,%s,%s,0,0,%s,0,0,0,0,0,0,0,0,'')""",
+            data,
+        )
+        return rem
