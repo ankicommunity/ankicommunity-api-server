@@ -1,4 +1,3 @@
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -85,7 +84,7 @@ djankiserv:
     ##
     dataRoot: '/opt/djankiserv/'
 
-## Config related to the static files, currently only for the admin
+## Config related to the static files, currently only for the admin and Django Rest Framework API
 #
 static:
   enabled: true
