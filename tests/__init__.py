@@ -397,8 +397,7 @@ class SyncTestFullSyncer(SyncTestRemoteServer):
                     # FIXME: we have to compare strings because sqlite is fucking stupid
                     # and you can store the empty string in a type long.
                     self.assertEqual(
-                        [[str(y) for y in x] for x in pg_res],
-                        [[str(y) for y in x] for x in sl_res],
+                        [[str(y) for y in x] for x in pg_res], [[str(y) for y in x] for x in sl_res],
                     )
 
         os.unlink(temp_db_path)
@@ -441,8 +440,7 @@ class SyncTestFullSyncer(SyncTestRemoteServer):
                     # FIXME: we have to compare strings because sqlite is fucking stupid
                     # and you can store the empty string in a type long.
                     self.assertEqual(
-                        [[str(y) for y in x] for x in pg_res],
-                        [[str(y) for y in x] for x in sl_res],
+                        [[str(y) for y in x] for x in pg_res], [[str(y) for y in x] for x in sl_res],
                     )
 
 

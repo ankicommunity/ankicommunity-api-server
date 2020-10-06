@@ -147,13 +147,13 @@ DJANKISERV_GENERATE_TEST_ASSETS_DIR = "/tmp/asrv/"
 Connecting Anki to the sync server
 ==================================
 
-The [Djankiserv Connect](https://ankiweb.net/shared/info/1724518526) Anki addon is available in the Anki addons repository. You can choose to sync all of your Anki profiles or just some (or none) of them with this plugin, and it is the recommended way of pointing your Anki desktop to Djankiserv. 
+The [Djankiserv Connect](https://ankiweb.net/shared/info/1724518526) Anki addon is available in the Anki addons repository. You can choose to sync all of your Anki profiles or just some (or none) of them with this plugin, and it is the recommended way of pointing your Anki desktop to Djankiserv.
 
 Remember to close and open Anki again for the addon to be visible after plugin installation!
 
 When you have installed the addon (see Anki docs for installing addons), simply go to Tools -> Preferences -> Network, then fill in the required fields, namely check the "Use custom sync server" and put in the server address (e.g., http://localhost:8002/djs/ or what ever it is available under).
 
-You may also configure Anki Desktop without the plugin. 
+You may also configure Anki Desktop without the plugin.
 
 Recent versions of `Anki` desktop (2.1.32+ and maybe a bit earlier) now require you to use an environment variable to configure the sync server endpoints if you want to use a custom server. For Windows you can do the following (`powershell`):
 ```

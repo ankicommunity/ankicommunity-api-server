@@ -1,16 +1,14 @@
-from PyQt5.Qt import Qt, QCheckBox, QLabel, QHBoxLayout, QLineEdit, \
-    QListWidget, QAbstractItemView, QListWidgetItem
-from aqt.forms import preferences
-from anki.hooks import wrap, addHook
-import aqt
-import anki.consts
-import anki.sync
 import os
+
+import aqt
+from anki.hooks import addHook, wrap
+from PyQt5.Qt import QAbstractItemView, QCheckBox, QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, Qt
 
 DEFAULT_ADDR = "http://localhost:27701/"
 config = aqt.mw.addonManager.getConfig(__name__)
 
 # TODO: force the user to log out before changing any of the settings
+
 
 def addui(self, _):
     self = self.form
@@ -46,8 +44,8 @@ def addui(self, _):
         if p in config["selectedprofiles"]:
             item.setSelected(True)
     self.selectedProfilesList.setFixedHeight(
-        self.selectedProfilesList.sizeHintForRow(0) * self.selectedProfilesList.count() + \
-        2 * self.selectedProfilesList.frameWidth()
+        self.selectedProfilesList.sizeHintForRow(0) * self.selectedProfilesList.count()
+        + 2 * self.selectedProfilesList.frameWidth()
     )
 
     self.selectedProfilesList.setSelectionMode(QAbstractItemView.MultiSelection)
@@ -56,54 +54,64 @@ def addui(self, _):
     if config["enabled"]:
         self.useCustomServer.setCheckState(Qt.Checked)
     if config["addr"]:
-        self.customServerAddr.setText(config['addr'])
+        self.customServerAddr.setText(config["addr"])
 
     if config["onlyselected"]:
         self.onlySelected.setCheckState(Qt.Checked)
     self.customServerAddr.textChanged.connect(lambda text: updateserver(self, text))
+
     def onchecked(state):
         config["enabled"] = state == Qt.Checked
         updateui(self, state)
         updateserver(self, self.customServerAddr.text())
+
     self.useCustomServer.stateChanged.connect(onchecked)
 
     self.selectedProfilesList.itemClicked.connect(lambda _: updateprofiles(self))
+
     def ononlyselectedchecked(state):
         config["onlyselected"] = state == Qt.Checked
         updateuiprofiles(self, state)
         updateprofiles(self)
+
     self.onlySelected.stateChanged.connect(ononlyselectedchecked)
 
     updateui(self, self.useCustomServer.checkState())
     updateuiprofiles(self, self.onlySelected.checkState())
 
+
 def updateserver(self, text):
-    if config['enabled']:
+    if config["enabled"]:
         addr = text or self.customServerAddr.placeholderText()
-        config['addr'] = addr
+        config["addr"] = addr
         setserver()
     aqt.mw.addonManager.writeConfig(__name__, config)
+
 
 def updateprofiles(self):
     # For simplicity just flush the whole list rather than toggle the item
     config["selectedprofiles"] = [x.text() for x in self.selectedProfilesList.selectedItems()]
     aqt.mw.addonManager.writeConfig(__name__, config)
 
+
 def updateuiprofiles(self, state):
-    self.selectedProfilesLabel.setEnabled(state == Qt.Checked and config['enabled'])
-    self.selectedProfilesList.setEnabled(state == Qt.Checked and config['enabled'])
+    self.selectedProfilesLabel.setEnabled(state == Qt.Checked and config["enabled"])
+    self.selectedProfilesList.setEnabled(state == Qt.Checked and config["enabled"])
+
 
 def updateui(self, state):
     self.serverAddrLabel.setEnabled(state == Qt.Checked)
     self.customServerAddr.setEnabled(state == Qt.Checked)
     self.onlySelected.setEnabled(state == Qt.Checked)
-    self.selectedProfilesLabel.setEnabled(state == Qt.Checked and config['onlyselected'])
-    self.selectedProfilesList.setEnabled(state == Qt.Checked and config['onlyselected'])
+    self.selectedProfilesLabel.setEnabled(state == Qt.Checked and config["onlyselected"])
+    self.selectedProfilesList.setEnabled(state == Qt.Checked and config["onlyselected"])
+
 
 def setserver():
-    if config['enabled'] and (not config['onlyselected'] or aqt.mw.pm.name in config['selectedprofiles']):
-        os.environ["SYNC_ENDPOINT"] = config['addr'] + ("" if config['addr'][-1] == "/" else "/") + "sync/"
-        os.environ["SYNC_ENDPOINT_MEDIA"] = config['addr'] + ("" if config['addr'][-1] == "/" else "/") + "msync/"
+    if config["enabled"] and (not config["onlyselected"] or aqt.mw.pm.name in config["selectedprofiles"]):
+        os.environ["SYNC_ENDPOINT"] = config["addr"] + ("" if config["addr"][-1] == "/" else "/") + "sync/"
+        os.environ["SYNC_ENDPOINT_MEDIA"] = config["addr"] + ("" if config["addr"][-1] == "/" else "/") + "msync/"
+
 
 addHook("profileLoaded", setserver)
 aqt.preferences.Preferences.__init__ = wrap(aqt.preferences.Preferences.__init__, addui, "after")

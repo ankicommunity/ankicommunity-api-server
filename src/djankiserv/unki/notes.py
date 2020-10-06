@@ -89,18 +89,7 @@ class Note:  # pylint: disable=R0902
         self.usn = self.col.usn
         sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
         self.col.db.execute(
-            sql,
-            self.id,
-            self.guid,
-            self.mid,
-            self.mod,
-            self.usn,
-            tags,
-            fields,
-            sfld,
-            csum,
-            self.flags,
-            self.data,
+            sql, self.id, self.guid, self.mid, self.mod, self.usn, tags, fields, sfld, csum, self.flags, self.data,
         )
 
         self.col.register_tags(self.tags)

@@ -125,9 +125,7 @@ class Scheduler:
 
     def _resetNewCount(self):
         cntFn = lambda did, lim: self.col.db.scalar(
-            f"select least(count(0), %s) from {self.col.username}.cards where did = %s and queue = 0",
-            lim,
-            did,
+            f"select least(count(0), %s) from {self.col.username}.cards where did = %s and queue = 0", lim, did,
         )
         self.newCount = self._walkingCount(self._deckNewLimitSingle, cntFn)
 
