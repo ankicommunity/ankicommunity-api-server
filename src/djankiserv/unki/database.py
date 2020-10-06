@@ -8,7 +8,7 @@ import pickle
 import subprocess
 
 from django.conf import settings
-from django.db import connections
+from django.db import connection, connections
 from django.http import HttpResponse
 
 import djankiserv.unki
@@ -23,7 +23,10 @@ logger = logging.getLogger("djankiserv.unki.database")
 
 
 def db_conn():
-    return connections["userdata"]
+    if "userdata" in connections:
+        return connections["userdata"]
+
+    return connection
 
 
 class StandardDB:
@@ -132,7 +135,7 @@ def dump_io_to_file(session, method, io_obj, is_media=False):  # noqa: C901  # p
         fh.write(to_print)
 
     proc_res = subprocess.run(
-        ["pg_dump", connections["userdata"].settings_dict["NAME"], "--schema", schema_name, "--column-inserts"],
+        ["pg_dump", db_conn().settings_dict["NAME"], "--schema", schema_name, "--column-inserts"],
         capture_output=True,
         text=True,
         check=True,
@@ -173,20 +176,7 @@ def dump_io_to_file(session, method, io_obj, is_media=False):  # noqa: C901  # p
 
 
 class PostgresAnkiDataModel(AnkiDataModelBase):
-    MODEL_SETUP = """
-        SET statement_timeout = 0;
-        SET lock_timeout = 0;
-        SET idle_in_transaction_session_timeout = 0;
-        SET client_encoding = 'UTF8';
-        SET standard_conforming_strings = on;
-        SELECT pg_catalog.set_config('search_path', '', false);
-        SET check_function_bodies = false;
-        SET client_min_messages = warning;
-        SET row_security = off;
-
-        SET default_tablespace = '';
-
-        SET default_with_oids = false;"""
+    MODEL_SETUP = ""
 
     MODEL_SETUP_LIST = MODEL_SETUP.split(";")
     CREATE_SCHEMA = "CREATE SCHEMA {schema_name};"
