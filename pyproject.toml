@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "djankiserv"
-version = "0.0.5"
+version = "0.0.6"
 description = "Django-based synchronisation and API server for Anki"
 authors = ["Anton Melser <anton@melser.org>"]
 maintainers = ["Anton Melser <anton@melser.org>"]
