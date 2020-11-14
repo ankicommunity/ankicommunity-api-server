@@ -32,6 +32,8 @@ The `helm` chart is known to work on `microk8s` and allows you to very easily in
 
 ## Working around chunking with a proxy
 
+You need to implement a proxy or certain sync functions *will not work*.
+
 Recent `anki` clients now use a mechanism called 'chunking' and `Django` doesn't (appear to) support that out of the box, meaning you MUST have your site behind a proxy like `Apache` `mod_proxy` or `nginx`. Any site should have this anyway, so there likely won't be a strong push to implement this natively.
 
 # Configuration
