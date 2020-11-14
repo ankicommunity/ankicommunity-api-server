@@ -4,28 +4,39 @@ Any requests or functionality that don't interfere with using this project for t
 
 If you want to get involved, start the conversation by creating an issue in the Github issue tracker for the functionality you are interest in.
 
-`djankiserv` uses `poetry`:
+## Poetry
 
-`curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python`
+1. Install the dependency manager of the project first:
+   
+   ```
+   curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3    
+   ```
 
-Then just install the project:
-
-`poetry install`
+2. Install the dependencies of the project:
+   
+   ```
+   poetry install
+   ```
+   
+   > If you encounter a **SolveProblemError**, then you may try with updated dependencies:
+   
+   ```
+   poetry update
+   ```
 
 The settings will "just work" if you create a `postgresql`/`mysql` database called `djankiserv` with a superuser `djankiserv` with the password `password`.
 
-You should then be able to launch by doing:
+3. Migrate the database and create an admin account to get started:
+   
+   ```
+   poetry run ./scripts/runmanage.sh migrate
+   poetry run ./scripts/runmanage.sh createsuperuser
+   ```
 
-`poetry run ./scripts/runmanage.sh migrate`
-
-`poetry run ./scripts/runmanage.sh createsuperuser`
-
-And create yourself an admin user.
-
-and finally:
-
-`poetry run ./scripts/rundevserver.sh`
+4. Run the server:
+   
+   ```
+    poetry run ./scripts/rundevserver.sh
+   ```
 
 It will then be listening on `http://localhost:8002/`, and you can log into `http://localhost:8002/admin/` and add a normal user using the normal `django` web interface.
-
-:warning::warning::warning: You MUST implement a proxy or certain sync functions WILL NOT WORK. A simple reverse proxy is all that you need, so any serious http server should be fine, and docs very easy to find.
