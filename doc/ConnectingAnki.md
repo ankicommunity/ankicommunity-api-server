@@ -21,3 +21,7 @@ SYNC_ENDPOINT_MEDIA='http://localhost:8002/djs/msync/' SYNC_ENDPOINT='http://loc
 ```
 
 For `Ankidroid` you need to go to Settings -> Advanced -> Custom Sync Server and fill in both of the server endpoints, namely the sync URL (e.g., http://localhost:8002/djs/) and msync URL (e.g., http://localhost:8002/djs/msync/), but remember that Ankidroid now requires SSL so you will need to either use the supplied Kubernetes Helm Chart or create certificates using some other mechanism!
+
+## You may need to use a proxy
+
+See [Installation / Working around chunking with a proxy](Installation.md#working-around-chunking-with-a-proxy).
