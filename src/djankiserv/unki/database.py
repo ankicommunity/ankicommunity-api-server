@@ -75,7 +75,7 @@ class StandardDB:
     def executemany(self, sql, li):
         self.mod = True
         cur = self._db.cursor()
-        cur.executemany(sql, li)
+        cur.executemany(sql, list(li))  # list() due to https://github.com/korfuri/django-prometheus/issues/240
         return cur
 
     def commit(self):

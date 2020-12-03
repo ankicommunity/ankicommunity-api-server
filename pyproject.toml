@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "djankiserv"
-version = "0.0.5"
+version = "0.0.6"
 description = "Django-based synchronisation and API server for Anki"
 authors = ["Anton Melser <anton@melser.org>"]
 maintainers = ["Anton Melser <anton@melser.org>"]
@@ -30,6 +30,10 @@ flake9 = "^3.8.3"
 pre-commit = "^2.7.1"
 mysqlclient = "^2.0.1"
 psycopg2-binary = "^2.8.6"
+
+[tool.poetry.extras]
+mysql = ["mysqlclient"]
+pgsql = ["psycopg2-binary"]
 
 [tool.coverage.run]
 omit = [
