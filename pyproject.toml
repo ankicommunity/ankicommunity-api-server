@@ -31,6 +31,10 @@ pre-commit = "^2.7.1"
 mysqlclient = "^2.0.1"
 psycopg2-binary = "^2.8.6"
 
+[tool.poetry.extras]
+mysql = ["mysqlclient"]
+pgsql = ["psycopg2-binary"]
+
 [tool.coverage.run]
 omit = [
     "*manage.py",
