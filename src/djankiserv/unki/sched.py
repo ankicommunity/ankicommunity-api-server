@@ -268,3 +268,15 @@ class Scheduler:
         # check if the day has rolled over
         if time.time() > self.dayCutoff:
             self.reset()
+
+    def emptyDyn(self, deck_id, limit=None):
+        if not limit:
+            limit = f"did = {deck_id}"
+        # move out of cram queue
+        self.col.db.execute(
+            f"""
+            update cards set did = odid, queue = (case when type = 1 then 0
+            else type end), type = (case when type = 1 then 0 else type end),
+            due = odue, odue = 0, odid = 0, usn = %s where {limit}""",
+            self.col.usn,
+        )
