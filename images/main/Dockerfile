@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile
 FROM python:3.8-slim
 
-RUN apt update && apt install -y gcc git libmariadb-dev && apt -y autoremove && apt -y clean && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y gcc git && apt -y autoremove && apt -y clean && rm -rf /var/lib/apt/lists/*
 
 # Set environment varibles
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -12,6 +12,6 @@ WORKDIR /app
 COPY ./src /app
 COPY ./scripts /app/scripts
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.pgonly.txt
 
 CMD ["/bin/bash", "/app/scripts/runserver.sh"]
