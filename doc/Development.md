@@ -7,19 +7,19 @@ If you want to get involved, start the conversation by creating an issue in the 
 ## Poetry
 
 1. Install the dependency manager of the project first:
-   
+
    ```
    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3    
    ```
 
 2. Install the dependencies of the project:
-   
+
    ```
    poetry install
    ```
-   
+
    > If you encounter a **SolveProblemError**, then you may try with updated dependencies:
-   
+
    ```
    poetry update
    ```
@@ -27,14 +27,14 @@ If you want to get involved, start the conversation by creating an issue in the 
 The settings will "just work" if you create a `postgresql`/`mysql` database called `djankiserv` with a superuser `djankiserv` with the password `password`.
 
 3. Migrate the database and create an admin account to get started:
-   
+
    ```
    poetry run ./scripts/runmanage.sh migrate
    poetry run ./scripts/runmanage.sh createsuperuser
    ```
 
 4. Run the server:
-   
+
    ```
     poetry run ./scripts/rundevserver.sh
    ```

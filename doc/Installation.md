@@ -9,6 +9,11 @@ See also: [Connecting Anki to the sync server](ConnectingAnki.md)
 ```
 $ pip install djankiserv
 ```
+This will not install a database driver. You may pull in a supported database driver by adding an extra to the `pip` install(`mysql` and `pgsql` are supported):
+```
+$ pip install djankiserv[pgsql]
+```
+Which will also install `psycopg2-binary`. If you choose `mysql`, you will also need to have the `mysql` development headers, so that `pip` can build the driver (tested with `libmariadb-dev` on Ubuntu/Debian).
 
 ```
 INSTALLED_APPS = [

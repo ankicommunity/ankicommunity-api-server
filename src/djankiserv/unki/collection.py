@@ -479,11 +479,6 @@ class Collection:  # pylint: disable=R0902,R0904
         note = self.new_note(model)
         note.model()["did"] = deck_id
 
-        # print('my map', self.models.field_map(model))
-        # print('my map', self.models.field_map(model).values())
-        # raise Exception('here')
-        # note_json["fields"]
-
         for field in self.models.field_map(model).values():
             note[field[1]["name"]] = note_json["fields"][field[0]]
 
