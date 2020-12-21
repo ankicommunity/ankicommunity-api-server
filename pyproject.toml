@@ -10,7 +10,7 @@ homepage = "https://github.com/ankicommunity/djankiserv"
 repository = "https://github.com/ankicommunity/djankiserv"
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = ">=3.8,<4"
 django = "^3.1"
 djangorestframework = "^3.11.1"
 gunicorn = "^20.0.4"
