@@ -337,7 +337,12 @@ class Collection:  # pylint: disable=R0902,R0904
         where = ""
         if note_ids:
             where = f" where id in {ids2str(note_ids)}"
-        return [Note(self, note_id=i) for i in self.db.list(f"select id from {self.username}.notes {where}")]
+
+        sql = f"""select id, guid, mid, modified, usn, tags, flds, flags, data
+                from {self.username}.notes {where}"""
+        cur = self.db.execute(sql)
+
+        return [Note(self).load_from_db_row(row) for row in cur.fetchall()]
 
     def all_note_ids(self):
         return self.db.list(f"select id from {self.username}.notes")
