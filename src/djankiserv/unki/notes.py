@@ -39,7 +39,7 @@ class Note:  # pylint: disable=R0902
         if note_id:
             self.id = note_id
             self.load()
-        else:
+        elif model:
             self.id = col.timestamp_for_table("notes")
             self.guid = guid64()
             self._model = model
@@ -62,6 +62,15 @@ class Note:  # pylint: disable=R0902
         self._model = self.col.models.get(self.mid)
         self._fmap = self.col.models.field_map(self._model)
         self.scm = self.col.scm
+
+    def load_from_db_row(self, row):
+        (self.id, self.guid, self.mid, self.mod, self.usn, self.tags, self.fields, self.flags, self.data) = row
+        self.fields = splitFields(self.fields)
+        self.tags = split_tags(self.tags)
+        self._model = self.col.models.get(self.mid)
+        self._fmap = self.col.models.field_map(self._model)
+        self.scm = self.col.scm
+        return self
 
     def as_dict(self):
         return {"id": self.id, "model": self._model["name"], "fields": self.fields, "tags": self.tags}

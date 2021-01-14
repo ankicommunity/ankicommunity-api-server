@@ -48,7 +48,6 @@ class StandardDB:
             for sql in djankiserv.unki.AnkiDataModel.generate_schema_sql_list(schema_name):
                 if not sql.strip():
                     continue
-                # print("executing", sql)
                 cur.execute(sql)
             res = cur.fetchone()
             return res[0]  # returns an Ok message

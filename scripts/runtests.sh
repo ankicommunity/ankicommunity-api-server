@@ -5,7 +5,7 @@ source scripts/runsetup.sh
 export PYTHONPATH=$PYTHONPATH:tests
 export DJANKISERV_DATA_ROOT=/tmp/djankiserv_tests
 
-pylint --ignore requirements.txt,requirements.ci.txt,requirements.pgonly.txt,requirements.myonly.txt,djankiserv.egg-info src/*
+pylint --ignore requirements.txt,requirements.ci.txt,requirements.postgres.txt,requirements.mariadb.txt,djankiserv.egg-info src/*
 pylint tests/*
 
 # pre-commit also has flake8 linter
