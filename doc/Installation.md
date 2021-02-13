@@ -4,7 +4,7 @@ See also: [Connecting Anki to the sync server](ConnectingAnki.md)
 
 ## Deployment as a Django app
 
-`djankiserv` is a Django Rest Framework-based `Django` app, so can easily be used in any `postgresql`/`mysql`-driven `Django` site you already have. It is available in pypi, so you can simply install vi `pypi` and include as an app in your `INSTALLED_APPS`.
+`djankiserv` is a Django Rest Framework-based `Django` app, so can easily be used in any `postgresql`/`mysql`-driven `Django` site you already have. It is available in pypi, so you can simply install via `pypi` and include as an app in your `INSTALLED_APPS`.
 
 ```
 $ pip install djankiserv
