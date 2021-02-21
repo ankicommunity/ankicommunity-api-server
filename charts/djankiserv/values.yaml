@@ -24,7 +24,7 @@ clusterissuer:
 
 djankiserv:
   image:
-    repository: antonmelser/djankiserv
+    repository: ankicommunity/djankiserv
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
@@ -89,7 +89,7 @@ djankiserv:
 static:
   enabled: true
   image:
-    repository: antonmelser/djankiserv-static
+    repository: ankicommunity/djankiserv-static
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""

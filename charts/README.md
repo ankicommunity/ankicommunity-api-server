@@ -10,20 +10,20 @@ sudo reboot
 ```
 Now install and configure `microk8s` with the required addons for `djankiserv`:
 ```
-sudo snap install microk8s --channel=1.19 --classic
+sudo snap install microk8s --channel=1.20 --classic
 sudo microk8s.enable storage dns
 sudo snap alias microk8s.kubectl kubectl
 sudo snap install helm --classic
 sudo usermod -a -G microk8s $USER
 logout
 ```
-You need to be in the correct group, so make sure you do log out, then continue setting up `cert-manager` for SSL certs:
+You need to be in the correct group, so make sure you do logout/login, then continue setting up `cert-manager` for SSL certs:
 ```
 mkdir -p ~/.kube/ && kubectl config view --raw >~/.kube/config
 kubectl create namespace cert-manager
 helm repo add jetstack https://charts.jetstack.io
 helm repo update
-helm install cert-manager jetstack/cert-manager --namespace cert-manager --version v0.16.1 --set installCRDs=true
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager --version 1.2.0 --set installCRDs=true
 ```
 Now get the helm chart (a chart repo will be set up soon):
 ```
