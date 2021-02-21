@@ -3,11 +3,13 @@ set -e
 
 source scripts/runsetup.sh
 
-MAIN_IMAGE=${DJANKISERV_DOCKER_REPO}/djankiserv:$(git describe --tags)
-docker build -f images/main/Dockerfile . -t ${MAIN_IMAGE}
-docker push ${MAIN_IMAGE}
+TAG=${DJANKISERV_BUILD_TAG:-$(git describe --tags)}
 
-STATIC_IMAGE=${DJANKISERV_DOCKER_REPO}/djankiserv-static:$(git describe --tags)
-python src/manage.py collectstatic --noinput
-docker build -f images/static/Dockerfile . -t ${STATIC_IMAGE}
-docker push ${STATIC_IMAGE}
+MAIN_IMAGE=${DJANKISERV_DOCKER_REPO}/djankiserv:$TAG
+buildah bud -t ${MAIN_IMAGE} -f images/main/Dockerfile .
+buildah push -D ${MAIN_IMAGE}
+
+STATIC_IMAGE=${DJANKISERV_DOCKER_REPO}/djankiserv-static:$TAG
+python3 src/manage.py collectstatic --noinput
+buildah bud -t ${STATIC_IMAGE} -f images/static/Dockerfile .
+buildah push -D ${STATIC_IMAGE}
