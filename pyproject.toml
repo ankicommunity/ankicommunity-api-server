@@ -28,7 +28,6 @@ colorama = "^0.4.3"
 pylint = "^2.6.0"
 flake9 = "^3.8.3"
 pre-commit = "^2.7.1"
-mysqlclient = "^2.0.1"
 psycopg2-binary = "^2.8.6"
 
 [tool.poetry.extras]
