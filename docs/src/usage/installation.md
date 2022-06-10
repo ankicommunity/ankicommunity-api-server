@@ -1,6 +1,6 @@
 # Installation
 
-See also: [Connecting Anki to the sync server](ConnectingAnki.md)
+See also: [Connecting Anki to the sync server](./connecting-to-anki-desktop.md)
 
 ## Deployment as a Django app
 

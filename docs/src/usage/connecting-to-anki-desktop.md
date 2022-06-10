@@ -24,4 +24,4 @@ For `Ankidroid` you need to go to Settings -> Advanced -> Custom Sync Server and
 
 ## You may need to use a proxy
 
-See [Installation / Working around chunking with a proxy](Installation.md#working-around-chunking-with-a-proxy).
+See [Installation / Working around chunking with a proxy](./installation.md#working-around-chunking-with-a-proxy).
