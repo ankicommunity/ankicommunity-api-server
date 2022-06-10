@@ -1,0 +1,9 @@
+strict: true
+theme: readthedocs
+site_name: Anki API Server
+site_description: Self-hosted Anki API Server.
+site_author: Anki Community
+site_url: https://ankicommunity.github.io/anki-api-server
+repo_url: https://github.com/ankicommunity/anki-api-server
+docs_dir: src
+site_dir: build
