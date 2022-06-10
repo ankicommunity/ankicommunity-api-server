@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# file: poetry-update.sh
+# description: Update Python dependencies to latest.
+
+POETRY_UPDATE_ARGS=$1
+POETRY_UPDATE_OPTS=--dry-run
+
+poetry update "${POETRY_UPDATE_OPTS}" "${POETRY_UPDATE_ARGS}"
+
+# TODO: Run poetry export
+# TODO: Create git branch and commit
