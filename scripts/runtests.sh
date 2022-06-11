@@ -16,4 +16,4 @@ coverage run --source='src' src/manage.py test --verbosity=1 tests
 coverage report -m --skip-covered --skip-empty --fail-under 80
 
 # Test with the mariadb/mysql db backend
-DJANKISERV_MAINDB_PORT=3306 DJANKISERV_USERDB_PORT=3306 DJANKISERV_MAINDB_ENGINE=django.db.backends.mysql DJANKISERV_USERDB_ENGINE=django.db.backends.mysql python src/manage.py test --verbosity=1 tests
+DJANKISERV_MAINDB_PORT=3306 DJANKISERV_USERDB_PORT=3306 DJANKISERV_MAINDB_ENGINE=django.db.backends.mysql DJANKISERV_USERDB_ENGINE=django.db.backends.mysql python3 -m djankiserv_cli test --verbosity=1 tests
