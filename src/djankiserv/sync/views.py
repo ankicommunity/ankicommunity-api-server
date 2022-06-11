@@ -411,7 +411,7 @@ def media_downloadFiles(request):
 # DEBUG AND TESTING STUFF
 def print_request(request):
     try:
-        if settings.DJANKISERV_DEBUG:
+        if settings.DEBUG:
             print(pretty_request(request))
     except NameError:
         pass  # we haven't defined it, so can't be interested

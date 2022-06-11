@@ -10,6 +10,8 @@ from djankiserv.unki.database import MariadbAnkiDataModel, PostgresAnkiDataModel
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+DEBUG = os.getenv("DJANKISERV_DEBUG", "False").lower() == "true"
+
 SECRET_KEY = os.getenv("DJANKISERV_SECRET_KEY", "a_very_secretive_key")
 
 ALLOWED_HOSTS = os.getenv("DJANKISERV_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
@@ -143,10 +145,6 @@ STATIC_ROOT = "build/static"
 APPEND_SLASH = False
 
 DJANKISERV_DATA_ROOT = os.getenv("DJANKISERV_DATA_ROOT", "/tmp")
-
-# DEBUG STUFF
-DJANKISERV_DEBUG = os.getenv("DJANKISERV_DEBUG", "False").lower() == "true"
-DEBUG = DJANKISERV_DEBUG  # currently the same
 
 DJANKISERV_GENERATE_TEST_ASSETS = False
 DJANKISERV_GENERATE_TEST_ASSETS_DIR = "/tmp/asrv/"
