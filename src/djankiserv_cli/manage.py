@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+"""Django's command-line utility for administrative tasks.
+
+This should typically always be used via the djankiserv cli. However,
+a manage.py is maintained to follow django convension and for legacy reasons.
+
+This may be removed in the future if not needed.
+"""
 
 import os
 import sys
