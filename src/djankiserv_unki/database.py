@@ -11,7 +11,7 @@ from django.conf import settings
 from django.db import connection, connections
 from django.http import HttpResponse
 
-import djankiserv.unki
+import djankiserv_unki
 from djankiserv.assets import jsonfiles  # noqa: 401  # pylint: disable=W0611
 
 from . import AnkiDataModelBase, get_data
@@ -19,7 +19,7 @@ from . import AnkiDataModelBase, get_data
 MODEL_STD = 0
 NEW_CARDS_DUE = 1
 
-logger = logging.getLogger("djankiserv.unki.database")
+logger = logging.getLogger("djankiserv_unki.database")
 
 
 def db_conn():
@@ -45,7 +45,7 @@ class StandardDB:
     def create_schema(schema_name):
         assert schema_name.isidentifier()
         with db_conn().cursor() as cur:
-            for sql in djankiserv.unki.AnkiDataModel.generate_schema_sql_list(schema_name):
+            for sql in djankiserv_unki.AnkiDataModel.generate_schema_sql_list(schema_name):
                 if not sql.strip():
                     continue
                 cur.execute(sql)
@@ -56,7 +56,7 @@ class StandardDB:
     @staticmethod
     def delete_schema(schema_name):
         with db_conn().cursor() as cur:
-            cur.execute(djankiserv.unki.AnkiDataModel.DROP_SCHEMA.replace("{schema_name}", schema_name))
+            cur.execute(djankiserv_unki.AnkiDataModel.DROP_SCHEMA.replace("{schema_name}", schema_name))
 
     def execute(self, sql, *a, **ka):
         s = sql.strip().lower()

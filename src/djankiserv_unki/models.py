@@ -6,8 +6,8 @@ import json
 import re
 import time
 
-from djankiserv.unki import checksum  # checksum never actually used, so all occurrences dead code
-from djankiserv.unki import splitFields
+from djankiserv_unki import checksum  # checksum never actually used, so all occurrences dead code
+from djankiserv_unki import splitFields
 
 MODEL_CLOZE = 1
 

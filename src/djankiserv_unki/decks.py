@@ -8,7 +8,7 @@ import operator
 import pkgutil
 import unicodedata
 
-from djankiserv.unki import ids2str, intTime  # intTime is never actually used, so all occurrences are dead code
+from djankiserv_unki import ids2str, intTime  # intTime is never actually used, so all occurrences are dead code
 
 REM_DECK = 2
 

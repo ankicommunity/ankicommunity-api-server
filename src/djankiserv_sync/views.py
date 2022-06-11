@@ -16,9 +16,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
-from djankiserv.unki import get_data
-from djankiserv.unki.collection import Collection
-from djankiserv.unki.database import dump_io_to_file
+from djankiserv_unki import get_data
+from djankiserv_unki.collection import Collection
+from djankiserv_unki.database import dump_io_to_file
 from djankiserv_sync import SyncCollectionHandler, full_download, full_upload
 
 

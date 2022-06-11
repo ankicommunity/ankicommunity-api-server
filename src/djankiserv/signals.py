@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 
-from .unki.collection import Collection
+from djankiserv_unki.collection import Collection
 
 
 @receiver(post_save, sender=User)  # pylint: disable=W0613

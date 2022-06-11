@@ -13,9 +13,9 @@ import shutil
 import time
 import unicodedata
 
-import djankiserv.unki
+import djankiserv_unki
 from djankiserv.assets import jsonfiles  # noqa: 401  # pylint: disable=W0611
-from djankiserv.unki.database import StandardDB
+from djankiserv_unki.database import StandardDB
 
 from . import REM_CARD, REM_NOTE, checksum, fieldChecksum, ids2str, intTime, joinFields, splitFields, stripHTMLMedia
 from .cards import Card
@@ -27,7 +27,7 @@ from .sched import Scheduler
 MODEL_STD = 0
 NEW_CARDS_DUE = 1
 
-logger = logging.getLogger("djankiserv.unki.collection")
+logger = logging.getLogger("djankiserv_unki.collection")
 
 
 # from anki.utils
@@ -213,7 +213,7 @@ class Collection:  # pylint: disable=R0902,R0904
             self._remove_media_files(media_to_remove)
 
         if media_to_add:
-            sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.username, "media")
+            sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.username, "media")
             self.db.executemany(sql, media_to_add)
             self.db.commit()
 

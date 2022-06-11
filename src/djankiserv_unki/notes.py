@@ -6,7 +6,7 @@ import json
 import random
 import string
 
-import djankiserv.unki
+import djankiserv_unki
 
 from . import fieldChecksum, intTime, joinFields, splitFields, stripHTMLMedia
 
@@ -96,7 +96,7 @@ class Note:  # pylint: disable=R0902
         csum = fieldChecksum(self.fields[0])
         self.mod = mod if mod else intTime()
         self.usn = self.col.usn
-        sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
+        sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
         self.col.db.execute(
             sql, self.id, self.guid, self.mid, self.mod, self.usn, tags, fields, sfld, csum, self.flags, self.data,
         )
@@ -116,7 +116,7 @@ class Note:  # pylint: disable=R0902
 
     def cards(self):
         card_ids = self.col.db.list(f"select id from {self.col.username}.cards where nid = %s order by ord", self.id)
-        return [djankiserv.unki.cards.Card(self.col, card_id) for card_id in card_ids]
+        return [djankiserv_unki.cards.Card(self.col, card_id) for card_id in card_ids]
 
     def __getitem__(self, key):
         return self.fields[self._fmap[key][0]]

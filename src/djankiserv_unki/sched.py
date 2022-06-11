@@ -9,7 +9,7 @@ import time
 from heapq import *
 from operator import itemgetter
 
-from djankiserv.unki import ids2str, intTime
+from djankiserv_unki import ids2str, intTime
 
 # queue types: 0=new/cram, 1=lrn, 2=rev, 3=day lrn, -1=suspended, -2=buried
 # revlog types: 0=lrn, 1=rev, 2=relrn, 3=cram

@@ -6,11 +6,11 @@ import tempfile
 import time
 from sqlite3 import dbapi2 as sqlite
 
-import djankiserv.unki
+import djankiserv_unki
 from djankiserv.assets import jsonfiles  # noqa: 401
-from djankiserv.unki import REM_CARD, REM_NOTE, ids2str, intTime
-from djankiserv.unki.database import StandardDB, db_conn
-from djankiserv.unki.download import DB, sqlite3_for_download
+from djankiserv_unki import REM_CARD, REM_NOTE, ids2str, intTime
+from djankiserv_unki.database import StandardDB, db_conn
+from djankiserv_unki.download import DB, sqlite3_for_download
 
 logger = logging.getLogger("djankiserv.sync")
 
@@ -206,7 +206,7 @@ class SyncCollectionHandler:  # pylint: disable=R0904
 
     def merge_revlog(self, logs):
         # import AnkiDataModel  # noqa # pylint: disable=C0415,W0611
-        sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_nothing(self.col.username, "revlog")
+        sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_nothing(self.col.username, "revlog")
 
         self.col.db.executemany(sql, logs)
 
@@ -225,13 +225,13 @@ class SyncCollectionHandler:  # pylint: disable=R0904
         return update
 
     def merge_cards(self, cards):
-        sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "cards")
+        sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "cards")
         rows = self.newer_rows(cards, "cards", 4)
         self.col.db.executemany(sql, rows)
 
     def merge_notes(self, notes):
         rows = self.newer_rows(notes, "notes", 3)
-        sql = djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
+        sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
         self.col.db.executemany(sql, rows)
         self.col.update_field_cache([f[0] for f in rows])
 
@@ -329,8 +329,8 @@ def full_upload(data, username):
         # clean the default values from the collection table
         to_std_cursor.execute(f"TRUNCATE TABLE {tmp_schema_name}.col")
 
-        for table, props in djankiserv.unki.AnkiDataModel.MODEL.items():
-            if props["parent"] != djankiserv.unki.AnkiDataModel.COLLECTION_PARENT_DB:
+        for table, props in djankiserv_unki.AnkiDataModel.MODEL.items():
+            if props["parent"] != djankiserv_unki.AnkiDataModel.COLLECTION_PARENT_DB:
                 continue
 
             start_sqlite_cursor = sqlite_conn.cursor()
@@ -346,7 +346,7 @@ def full_upload(data, username):
                 cols = ",".join(["%s"] * len(current_data[0]))
                 to_std_cursor.executemany(f"INSERT INTO {tmp_schema_name}.{table} VALUES ({cols})", current_data)
             start_sqlite_cursor.close()
-        djankiserv.unki.AnkiDataModel.replace_schema(to_std_cursor, username, tmp_schema_name)
+        djankiserv_unki.AnkiDataModel.replace_schema(to_std_cursor, username, tmp_schema_name)
         os.remove(temp_db_path)
 
     return "OK"
@@ -363,8 +363,8 @@ def full_download(col, username):
 
     with sqlite.connect(download_db) as sqlite_conn:
         sqlite_conn.isolation_level = "EXCLUSIVE"
-        for table, props in djankiserv.unki.AnkiDataModel.MODEL.items():
-            if props["parent"] != djankiserv.unki.AnkiDataModel.COLLECTION_PARENT_DB:
+        for table, props in djankiserv_unki.AnkiDataModel.MODEL.items():
+            if props["parent"] != djankiserv_unki.AnkiDataModel.COLLECTION_PARENT_DB:
                 continue
 
             with db_conn().cursor() as from_std_cursor:

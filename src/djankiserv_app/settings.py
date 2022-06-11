@@ -4,8 +4,8 @@ import os
 import socket
 from pathlib import Path
 
-import djankiserv.unki
-from djankiserv.unki.database import MariadbAnkiDataModel, PostgresAnkiDataModel
+import djankiserv_unki
+from djankiserv_unki.database import MariadbAnkiDataModel, PostgresAnkiDataModel
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -85,7 +85,7 @@ else:
     }
 
 if os.getenv("DJANKISERV_USERDB_ENGINE") == "django.db.backends.mysql":
-    djankiserv.unki.AnkiDataModel = MariadbAnkiDataModel
+    djankiserv_unki.AnkiDataModel = MariadbAnkiDataModel
     DATABASES["userdata"] = {
         "ENGINE": os.getenv("DJANKISERV_USERDB_ENGINE", "django.db.backends.mysql"),
         "NAME": os.getenv("DJANKISERV_USERDB_NAME", "djankiserv"),
@@ -100,7 +100,7 @@ if os.getenv("DJANKISERV_USERDB_ENGINE") == "django.db.backends.mysql":
         "PORT": os.getenv("DJANKISERV_USERDB_PORT", "3306"),
     }
 else:
-    djankiserv.unki.AnkiDataModel = PostgresAnkiDataModel
+    djankiserv_unki.AnkiDataModel = PostgresAnkiDataModel
     DATABASES["userdata"] = {
         "ENGINE": os.getenv("DJANKISERV_USERDB_ENGINE", "django.db.backends.postgresql"),
         "NAME": os.getenv("DJANKISERV_USERDB_NAME", "djankiserv"),

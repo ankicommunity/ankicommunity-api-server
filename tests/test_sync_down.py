@@ -8,7 +8,7 @@ import zipfile
 
 from django.conf import settings
 
-from djankiserv.unki.database import db_conn
+from djankiserv_unki.database import db_conn
 
 from . import SyncTestRemoteServer, TestRemoteMediaServer, TestRemoteSyncServer
 

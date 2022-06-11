@@ -39,8 +39,8 @@ from djankiserv.sync.views import (
     media_mediaSanity,
     media_uploadChanges,
 )
-from djankiserv.unki import AnkiDataModel
-from djankiserv.unki.database import StandardDB, db_conn
+from djankiserv_unki import AnkiDataModel
+from djankiserv_unki.database import StandardDB, db_conn
 
 # copied from anki.consts
 HTTP_BUF_SIZE = 64 * 1024

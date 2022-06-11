@@ -8,7 +8,7 @@ import pkgutil
 from sqlite3 import dbapi2 as sqlite
 
 from djankiserv.assets.sql import sqlite3  # noqa: F401 # pylint: disable=W0611
-from djankiserv.unki import AnkiDataModelBase, intTime
+from djankiserv_unki import AnkiDataModelBase, intTime
 
 
 class DB:  # this is only for the sqlite db

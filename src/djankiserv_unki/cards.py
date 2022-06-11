@@ -2,7 +2,7 @@
 # Copyright: Ankitects Pty Ltd and contributors
 # License: GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 
-import djankiserv.unki
+import djankiserv_unki
 
 from . import intTime
 
@@ -56,7 +56,7 @@ class Card:  # pylint: disable=R0902
         assert self.due < 4294967296
 
         self.col.db.execute(
-            djankiserv.unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "cards"),
+            djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "cards"),
             self.id,
             self.nid,
             self.did,
