@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from . import views
+from djankiserv_sync import views
 
 urlpatterns = [
     # /sync
