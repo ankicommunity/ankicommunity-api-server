@@ -4,11 +4,19 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import RedirectView
 
-from . import views
+from djankiservproj import views
 
-urlpatterns = [
-    path("", RedirectView.as_view(url="/admin/")),
-    path("djs/", include("djankiserv.urls")),
-    path("health", views.health),
-    path("admin/", admin.site.urls),
-]
+from djankiserv.api.urls import urlpatterns as api_routes
+from djankiserv.sync.urls import urlpatterns as sync_routes
+
+def routes():
+    routes = []
+    routes.append(path("", RedirectView.as_view(url="/admin/")))
+    routes.append(path("admin/", admin.site.urls))
+    routes.append(path("health", views.health))
+
+    routes += api_routes
+    routes += sync_routes
+    return routes
+
+urlpatterns = routes()

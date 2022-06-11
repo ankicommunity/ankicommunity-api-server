@@ -142,10 +142,6 @@ STATIC_ROOT = "build/static"
 # support that
 APPEND_SLASH = False
 
-DJANKISERV_SYNC_URLBASE = "sync/"  # this is not actually currently configurable, due to hardcoding in the clients
-DJANKISERV_SYNC_MEDIA_URLBASE = "msync/"  # this is not actually configurable, due to hardcoding in the clients
-DJANKISERV_API_URLBASE = "dapi/"
-
 DJANKISERV_DATA_ROOT = os.getenv("DJANKISERV_DATA_ROOT", "/tmp")
 
 # DEBUG STUFF
