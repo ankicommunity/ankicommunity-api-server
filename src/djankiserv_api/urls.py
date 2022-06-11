@@ -3,7 +3,7 @@
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from djankiserv.api import views
+from djankiserv_api import views
 
 urlpatterns = [
     path("api/v1/auth/token", TokenObtainPairView.as_view(), name="token_obtain_pair"),

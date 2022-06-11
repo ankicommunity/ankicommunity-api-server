@@ -6,7 +6,7 @@ from django.views.generic.base import RedirectView
 
 from djankiserv_app import views
 
-from djankiserv.api.urls import urlpatterns as api_routes
+from djankiserv_api.urls import urlpatterns as api_routes
 from djankiserv_sync.urls import urlpatterns as sync_routes
 
 def routes():
