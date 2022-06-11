@@ -43,7 +43,7 @@ Recent `anki` clients now use a mechanism called 'chunking' and `Django` doesn't
 
 # Configuration
 
-This repo contains the `Django` project which is used for the `Kubernetes Helm` chart, so you can see all the required options in that file in `djankiserv/src/djankiservproj/settings.py`. Sensible defaults should exist for all options, and all of the options that make sense to change via environment variables are configurable in that way.
+This repo contains the `Django` project which is used for the `Kubernetes Helm` chart, so you can see all the required options in that file in `djankiserv/src/djankiserv_app/settings.py`. Sensible defaults should exist for all options, and all of the options that make sense to change via environment variables are configurable in that way.
 
 These environment variables are also stated below.
 
