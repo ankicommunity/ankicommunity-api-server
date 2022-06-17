@@ -21,24 +21,8 @@ from django.test.client import FakePayload
 from django.utils.encoding import force_bytes
 from rest_framework.test import APIRequestFactory, APITransactionTestCase
 
-from djankiserv.sync.views import (
-    base_applyChanges,
-    base_applyChunk,
-    base_applyGraves,
-    base_chunk,
-    base_download,
-    base_finish,
-    base_hostKey,
-    base_meta,
-    base_sanityCheck2,
-    base_start,
-    base_upload,
-    media_begin,
-    media_downloadFiles,
-    media_mediaChanges,
-    media_mediaSanity,
-    media_uploadChanges,
-)
+from djankiserv_sync import views
+
 from djankiserv_unki import AnkiDataModel
 from djankiserv_unki.database import StandardDB, db_conn
 
@@ -532,7 +516,7 @@ Content-Type: application/octet-stream\r\n\r\n"""
         self.postVars = dict()
 
         req = self.generic(io.BytesIO(json.dumps(dict(u=user, p=pw)).encode("utf8")))
-        ret = base_hostKey(req)
+        ret = views.base_hostKey(req)
 
         if ret.status_code != 200:
             # invalid auth or other issue
@@ -549,7 +533,7 @@ Content-Type: application/octet-stream\r\n\r\n"""
         self.postVars = dict(k=self.hkey, s=self.skey)
 
         req = self.generic(io.BytesIO(json.dumps(dict(v=SYNC_VER, cv=ANKI_VERSION_STRING)).encode("utf8")))
-        ret = base_meta(req)
+        ret = views.base_meta(req)
 
         if ret.status_code != 200:
             # invalid auth or another issue
@@ -559,25 +543,25 @@ Content-Type: application/octet-stream\r\n\r\n"""
 
 class TestRemoteSyncServer(RemoteServer):
     def applyGraves(self, **kw):
-        return self._run(kw, base_applyGraves)
+        return self._run(kw, views.base_applyGraves)
 
     def applyChanges(self, **kw):
-        return self._run(kw, base_applyChanges)
+        return self._run(kw, views.base_applyChanges)
 
     def start(self, **kw):
-        return self._run(kw, base_start)
+        return self._run(kw, views.base_start)
 
     def chunk(self, **kw):
-        return self._run(kw, base_chunk)
+        return self._run(kw, views.base_chunk)
 
     def applyChunk(self, **kw):
-        return self._run(kw, base_applyChunk)
+        return self._run(kw, views.base_applyChunk)
 
     def sanityCheck2(self, **kw):
-        return self._run(kw, base_sanityCheck2)
+        return self._run(kw, views.base_sanityCheck2)
 
     def finish(self, **kw):
-        return self._run(kw, base_finish)
+        return self._run(kw, views.base_finish)
 
     def abort(self, **kw):
         raise NotImplementedError
@@ -601,7 +585,7 @@ class TestFullSyncer(RemoteServer):
 
         req = self.generic(io.BytesIO(json.dumps(dict(v=ANKI_VERSION_STRING)).encode("utf8")))
 
-        ret = base_download(req)
+        ret = views.base_download(req)
 
         if ret.status_code != 200:
             # invalid auth or another issue
@@ -612,7 +596,7 @@ class TestFullSyncer(RemoteServer):
         self.postVars = dict(k=self.hkey, s=self.skey)
 
         req = self.generic(io.BytesIO(bin_data))
-        ret = base_upload(req)
+        ret = views.base_upload(req)
 
         if ret.status_code != 200:
             # invalid auth or another issue
@@ -638,7 +622,7 @@ class TestRemoteMediaServer(RemoteServer):
         self.postVars = dict(k=self.hkey, v=ANKI_VERSION_STRING)
 
         req = self.generic(io.BytesIO(json.dumps(dict()).encode("utf8")))
-        resp = self._safe_return(media_begin(req))
+        resp = self._safe_return(views.media_begin(req))
         self.skey = resp["data"]["sk"]  # also initialise the skey, which we need for all subsequent calls
         return resp
 
@@ -647,7 +631,7 @@ class TestRemoteMediaServer(RemoteServer):
         self.postVars = dict(sk=self.skey)
 
         req = self.generic(io.BytesIO(json.dumps(kw).encode("utf8")))
-        return self._safe_return(media_mediaChanges(req))
+        return self._safe_return(views.media_mediaChanges(req))
 
     # args: files
     def downloadFiles(self, **kw):
@@ -656,7 +640,7 @@ class TestRemoteMediaServer(RemoteServer):
         req = self.generic(io.BytesIO(json.dumps(kw).encode("utf8")))
         # this is just the zip binary so no json to test for an error, we rely simply on the HTTP code
 
-        resp = media_downloadFiles(req)
+        resp = views.media_downloadFiles(req)
         if resp.status_code != 200:
             raise Exception("Error downloading file with status_code {resp.status_code}")
 
@@ -667,11 +651,11 @@ class TestRemoteMediaServer(RemoteServer):
         self.postVars = dict(sk=self.skey)
 
         req = self.generic(io.BytesIO(zip_file))
-        return self._safe_return(media_uploadChanges(req))
+        return self._safe_return(views.media_uploadChanges(req))
 
     # args: local
     def mediaSanity(self, **kw):
         self.postVars = dict(sk=self.skey)
 
         req = self.generic(io.BytesIO(json.dumps(kw).encode("utf8")))
-        return self._safe_return(media_mediaSanity(req))
+        return self._safe_return(views.media_mediaSanity(req))
