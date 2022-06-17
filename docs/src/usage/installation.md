@@ -74,4 +74,4 @@ These environment variables are also stated below.
 | Variable                     | Default                    | Comment            |
 |:----------------------------:|:--------------------------:|--------------------|
 | `DJANKISERV_DEBUG`           | `False` ||
-| `DJANKISERV_DATA_ROOT`       | `/tmp` ||
+| `DJANKISERV_DATA_ROOT`       | `./instances/djankiserv` ||

@@ -88,7 +88,7 @@ local_settings.py
 .env
 db.sqlite3
 /static/
-/tmp/
+/instances/
 docker-compose.yml
 .local_setup.sh
 # should these be in git?

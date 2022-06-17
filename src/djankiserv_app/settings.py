@@ -144,7 +144,7 @@ STATIC_ROOT = "build/static"
 # support that
 APPEND_SLASH = False
 
-DJANKISERV_DATA_ROOT = os.getenv("DJANKISERV_DATA_ROOT", "/tmp")
+DJANKISERV_DATA_ROOT = os.getenv("DJANKISERV_DATA_ROOT", "./instances/djankiserv")
 
 DJANKISERV_GENERATE_TEST_ASSETS = False
-DJANKISERV_GENERATE_TEST_ASSETS_DIR = "/tmp/asrv/"
+DJANKISERV_GENERATE_TEST_ASSETS_DIR = "./instances/asrv/"
