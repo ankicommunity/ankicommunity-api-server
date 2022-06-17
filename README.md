@@ -2,7 +2,7 @@
 
 `djankiserv` is an open source Django-based implementation of a synchronisation server for Anki 2.1+. It includes a user manager (the native Django user system).
 
-[Installation](doc/Installation.md) - [Connecting Anki to the sync server](doc/ConnectingAnki.md) - [Development](doc/Development.md) - [Contributing](doc/CONTRIBUTING.md)
+[Installation](docs/src/usage/installation.md) - [Connecting Anki to the sync server](docs/src/usage/connecting-to-anki-desktop.md) - [Development](docs/src/usage/development.md) - [Contributing](docs/src/CONTRIBUTING.md)
 
 ## About this implementation
 
