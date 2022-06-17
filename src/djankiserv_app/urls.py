@@ -9,6 +9,7 @@ from djankiserv_app import views
 from djankiserv_api.urls import urlpatterns as api_routes
 from djankiserv_sync.urls import urlpatterns as sync_routes
 
+
 def routes():
     routes = []
     routes.append(path("", RedirectView.as_view(url="/admin/")))
@@ -18,5 +19,6 @@ def routes():
     routes += api_routes
     routes += sync_routes
     return routes
+
 
 urlpatterns = routes()

@@ -13,7 +13,7 @@ from . import fieldChecksum, intTime, joinFields, splitFields, stripHTMLMedia
 
 def guid64():
     extra = "!#$%&()*+,-./:;<=>?@[]^_`{|}~"
-    num = random.randint(0, 2 ** 64 - 1)
+    num = random.randint(0, 2**64 - 1)
     s = string
     table = s.ascii_letters + s.digits + extra
     buf = ""
@@ -98,7 +98,18 @@ class Note:  # pylint: disable=R0902
         self.usn = self.col.usn
         sql = djankiserv_unki.AnkiDataModel.insert_on_conflict_update(self.col.username, "notes")
         self.col.db.execute(
-            sql, self.id, self.guid, self.mid, self.mod, self.usn, tags, fields, sfld, csum, self.flags, self.data,
+            sql,
+            self.id,
+            self.guid,
+            self.mid,
+            self.mod,
+            self.usn,
+            tags,
+            fields,
+            sfld,
+            csum,
+            self.flags,
+            self.data,
         )
 
         self.col.register_tags(self.tags)

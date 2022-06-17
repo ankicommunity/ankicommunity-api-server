@@ -15,5 +15,5 @@ urlpatterns = [
     path("api/v1/decks", views.decks, name="decks"),
     path("api/v1/decks/conf", views.decks_conf, name="decks_conf"),
     path("api/v1/tags", views.tags, name="tags"),
-    path("api/v1/models", views.models, name="models")
+    path("api/v1/models", views.models, name="models"),
 ]
