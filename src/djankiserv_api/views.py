@@ -9,6 +9,10 @@ from rest_framework.parsers import JSONParser
 from djankiserv_unki.collection import Collection
 
 
+def health(_request):
+    return JsonResponse({"status": "ok"})
+
+
 @csrf_exempt
 @api_view(["POST"])
 @parser_classes([JSONParser])

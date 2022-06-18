@@ -42,7 +42,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "djankiserv_app.urls"
+ROOT_URLCONF = "djankiserv_api.urls"
 
 TEMPLATES = [
     {
@@ -60,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "djankiserv_app.wsgi.application"
+WSGI_APPLICATION = "djankiserv_api.wsgi.application"
 
 DATABASES = {}
 
