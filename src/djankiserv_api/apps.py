@@ -7,4 +7,4 @@ class DjankiservConfig(AppConfig):
     name = "djankiserv"
 
     def ready(self):
-        import djankiserv.signals  # noqa # pylint: disable=C0415,W0611
+        import djankiserv_api.signals  # noqa # pylint: disable=C0415,W0611
