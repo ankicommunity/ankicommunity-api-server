@@ -5,15 +5,4 @@ source scripts/runsetup.sh
 export PYTHONPATH=$PYTHONPATH:tests
 export DJANKISERV_DATA_ROOT=./instances/djankiserv_tests
 
-pylint --ignore requirements.txt,requirements.ci.txt,requirements.postgres.txt,requirements.mariadb.txt,djankiserv.egg-info src/*
-pylint tests/*
-
-# pre-commit also has flake8 linter
-pre-commit run --all-files --verbose
-
-# Test with the default db backend, postgresql
-coverage run --source='src' src/manage.py test --verbosity=1 tests
-coverage report -m --skip-covered --skip-empty --fail-under 80
-
-# Test with the mariadb/mysql db backend
-DJANKISERV_MAINDB_PORT=3306 DJANKISERV_USERDB_PORT=3306 DJANKISERV_MAINDB_ENGINE=django.db.backends.mysql DJANKISERV_USERDB_ENGINE=django.db.backends.mysql python3 -m djankiserv_cli test --verbosity=1 tests
+coverage run --source='src' src/djankiserv_cli/manage.py test --verbosity=1 tests/
