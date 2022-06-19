@@ -20,8 +20,8 @@ def routes():
     routes.append(path("api/v1/notes/add", views.add_notes, name="add_notes"))
     routes.append(path("api/v1/notes", views.notes, name="notes"))
     routes.append(path("api/v1/notes/delete", views.delete_notes, name="delete_notes"))
-    routes.append(path("api/v1/decks", views.decks, name="decks"))
-    routes.append(path("api/v1/decks/conf", views.decks_conf, name="decks_conf"))
+    routes.append(path("api/v1/decks", views.get_decks, name="decks"))
+    routes.append(path("api/v1/decks/conf", views.get_deck_confs, name="decks_conf"))
     routes.append(path("api/v1/tags", views.tags, name="tags"))
     routes.append(path("api/v1/models", views.models, name="models"))
     return routes
