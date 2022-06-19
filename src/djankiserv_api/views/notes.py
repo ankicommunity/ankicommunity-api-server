@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 from django.conf import settings
 from django.http import JsonResponse
@@ -7,11 +6,6 @@ from rest_framework.decorators import api_view, parser_classes
 from rest_framework.parsers import JSONParser
 
 from djankiserv_unki.collection import Collection
-
-
-def health(_request):
-    return JsonResponse({"status": "ok"})
-
 
 @csrf_exempt
 @api_view(["POST"])
@@ -47,30 +41,3 @@ def delete_notes(request):
 
     return JsonResponse({"status": "ok"})
 
-
-@csrf_exempt
-@api_view(["POST", "GET"])
-def decks(request):
-    with Collection(request.user.username, settings.DJANKISERV_DATA_ROOT) as col:
-        return JsonResponse({"decks": col.decks.decks})
-
-
-@csrf_exempt
-@api_view(["POST", "GET"])
-def decks_conf(request):
-    with Collection(request.user.username, settings.DJANKISERV_DATA_ROOT) as col:
-        return JsonResponse({"decks_conf": col.decks.dconf})
-
-
-@csrf_exempt
-@api_view(["POST", "GET"])
-def tags(request):
-    with Collection(request.user.username, settings.DJANKISERV_DATA_ROOT) as col:
-        return JsonResponse({"tags": list(col.tags.keys())})
-
-
-@csrf_exempt
-@api_view(["POST", "GET"])
-def models(request):
-    with Collection(request.user.username, settings.DJANKISERV_DATA_ROOT) as col:
-        return JsonResponse({"models": col.models.models})
