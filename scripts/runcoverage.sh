@@ -3,5 +3,7 @@
 source scripts/runsetup.sh
 export PYTHONPATH=$PYTHONPATH:tests
 
-coverage report -m --skip-covered --skip-empty --fail-under 80
+[[ ! -z "${COVERAGE_FAIL_UNDER}" ]] || COVERAGE_FAIL_UNDER=80
+
+coverage report -m --skip-covered --skip-empty --fail-under ${COVERAGE_FAIL_UNDER}
 
