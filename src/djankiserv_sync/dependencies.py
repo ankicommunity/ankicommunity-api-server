@@ -7,7 +7,7 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.core.exceptions import PermissionDenied
 
 from djankiserv_unki.collection import Collection
-from djankiserv_sync.utils import print_request
+from djankiserv_utils import print_request
 
 
 logger = logging.getLogger("djankiserv.views")
