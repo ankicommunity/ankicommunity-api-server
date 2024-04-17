@@ -1,3 +1,6 @@
+> [!WARNING]
+> This project is incompatible with Anki Desktop >=2.1.57 and AnkiDroid >=2.17.0
+
 # djankiserv
 
 `djankiserv` is an open source Django-based implementation of a synchronisation server for Anki 2.1+. It includes a user manager (the native Django user system).
@@ -8,6 +11,8 @@
 
 Known Issues
 ------------
+
+**⚠️ This project is incompatible with Anki Desktop >=2.1.57 and AnkiDroid >=2.17.0 ⚠️**
 
 **⚠️ This project is unmaintained ⚠️**
 
