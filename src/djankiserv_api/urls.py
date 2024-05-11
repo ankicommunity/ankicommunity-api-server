@@ -18,7 +18,7 @@ def routes():
     routes.append(path("api/v1/auth/refresh", TokenRefreshView.as_view(), name="token_refresh"))
     # TODO: api/v1/auth/revoke
     routes.append(path("api/v1/notes/add", views.add_notes, name="add_notes"))
-    routes.append(path("api/v1/notes", views.notes, name="notes"))
+    routes.append(path("api/v1/notes", views.get_notes, name="notes"))
     routes.append(path("api/v1/notes/delete", views.delete_notes, name="delete_notes"))
     routes.append(path("api/v1/decks", views.get_decks, name="decks"))
     routes.append(path("api/v1/decks/conf", views.get_deck_confs, name="decks_conf"))

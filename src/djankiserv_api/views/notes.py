@@ -22,7 +22,7 @@ def add_notes(request):
 @csrf_exempt
 @api_view(["POST", "GET"])
 @parser_classes([JSONParser])
-def notes(request):
+def get_notes(request):
     with Collection(request.user.username, settings.DJANKISERV_DATA_ROOT) as col:
         notes = col.get_notes(request.data.get("ids"))
 
